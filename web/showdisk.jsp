@@ -12,7 +12,7 @@
         </tr>
         <c:forEach var="root" items="${rootDirectories}">
             <tr>
-                <td><a href="ShowDirectory?parentDirectory=${root.name}">${root.name}</a></td>
+                <td><a href="ShowDirectory?currentDirectory=${root.name}">${root.name}</a></td>
             </tr>
         </c:forEach>
     </table>

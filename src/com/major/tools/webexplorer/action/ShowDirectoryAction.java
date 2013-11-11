@@ -5,6 +5,7 @@ import com.major.tools.webexplorer.domain.exceptions.DirectoryNotFoundException;
 import com.major.tools.webexplorer.domain.exceptions.NotADirectoryException;
 import com.major.tools.webexplorer.entity.FileEntity;
 import com.opensymphony.xwork2.Action;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class ShowDirectoryAction implements Action {
     private String parentDirectory;
+    private String currentDirectory;
     private List<FileEntity> fileEntities;
 
     public String getParentDirectory() {
@@ -24,6 +26,14 @@ public class ShowDirectoryAction implements Action {
 
     public void setParentDirectory(String parentDirectory) {
         this.parentDirectory = parentDirectory;
+    }
+
+    public String getCurrentDirectory() {
+        return currentDirectory;
+    }
+
+    public void setCurrentDirectory(String currentDirectory) {
+        this.currentDirectory = currentDirectory;
     }
 
     public List<FileEntity> getFileEntities() {
@@ -36,8 +46,18 @@ public class ShowDirectoryAction implements Action {
 
     @Override
     public String execute() {
+        if (StringUtils.isNotEmpty(currentDirectory)) {
+            currentDirectory = currentDirectory.endsWith(File.separator) ? currentDirectory : currentDirectory + File.separator;
+            parentDirectory = new File(currentDirectory).getParent();
+            if (parentDirectory == null)
+                parentDirectory = "";
+            else
+                parentDirectory = parentDirectory.endsWith(File.separator) ? parentDirectory : parentDirectory + File.separator;
+        } else {
+            return ERROR;
+        }
         try {
-            fileEntities = FileService.getDirectoryStructure(new File(parentDirectory));
+            fileEntities = FileService.getDirectoryStructure(new File(currentDirectory));
         } catch (NotADirectoryException e) {
             return ERROR;
         } catch (DirectoryNotFoundException e) {

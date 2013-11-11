@@ -1,5 +1,6 @@
 package com.major.tools.webexplorer.domain;
 
+import com.major.commons.util.FileUtil;
 import com.major.tools.webexplorer.domain.exceptions.*;
 import com.major.tools.webexplorer.entity.FileEntity;
 import com.major.tools.webexplorer.entity.RootDirectory;
@@ -41,23 +42,23 @@ public class FileService {
      * @return a list
      */
     public static List<FileEntity> getDirectoryStructure(File directory) throws NotADirectoryException, DirectoryNotFoundException {
+        if (directory == null)
+            return null;
         if (!directory.isDirectory())
             throw new NotADirectoryException("File : \"" + directory.getPath() + "\" is not a directory.");
         if (!directory.exists())
             throw new DirectoryNotFoundException("Directory : \"" + directory.getPath() + "\" is not existed.");
 
         List<FileEntity> list = new ArrayList<>();
-        Iterator<File> files = FileUtils.iterateFilesAndDirs(directory, FileFilterUtils.trueFileFilter(), FileFilterUtils.directoryFileFilter());
-        if (!files.hasNext())
-            return new ArrayList<>();
-        files.next(); //step over the base directory
-        while (files.hasNext()) {
-            File file = files.next();
-            FileEntity fileEntity = new FileEntity();
-            fileEntity.setPath(file.getPath());
-            fileEntity.setName(file.getName());
-            fileEntity.setDirectory(file.isDirectory());
-            list.add(fileEntity);
+        List<File> fileList = FileUtil.listFilesAndDirs(directory);
+        if (fileList != null) {
+            for (File file : fileList) {
+                FileEntity fileEntity = new FileEntity();
+                fileEntity.setDirectory(file.isDirectory());
+                fileEntity.setName(file.getName());
+                fileEntity.setPath(file.getPath());
+                list.add(fileEntity);
+            }
         }
         return list;
     }

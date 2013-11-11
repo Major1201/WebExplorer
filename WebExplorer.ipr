@@ -15,6 +15,7 @@
             <element id="library" level="project" name="struts" />
             <element id="library" level="project" name="json" />
             <element id="library" level="project" name="jstl" />
+            <element id="library" level="project" name="major" />
           </element>
         </element>
         <element id="javaee-facet-resources" facet="WebExplorer/web/Web" />
@@ -227,6 +228,17 @@
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/log4j" recursive="false" />
       <jarDirectory url="file://$PROJECT_DIR$/lib/log4j" recursive="false" type="SOURCES" />
+    </library>
+    <library name="major">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/major" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="file://$PROJECT_DIR$/lib/major" />
+      </SOURCES>
+      <jarDirectory url="file://$PROJECT_DIR$/lib/major" recursive="false" />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/major" recursive="false" type="SOURCES" />
     </library>
     <library name="servlet">
       <CLASSES>
