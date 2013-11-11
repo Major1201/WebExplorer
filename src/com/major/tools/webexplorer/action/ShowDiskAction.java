@@ -12,7 +12,7 @@ import java.util.List;
  * Time: 上午12:50
  */
 public class ShowDiskAction implements Action {
-    private List<RootDirectory> rootDirectories; //盘符列表
+    private List<RootDirectory> rootDirectories; //Root list
 
     public List<RootDirectory> getRootDirectories() {
         return rootDirectories;

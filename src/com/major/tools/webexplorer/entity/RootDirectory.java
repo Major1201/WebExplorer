@@ -6,7 +6,7 @@ package com.major.tools.webexplorer.entity;
  * Time: 下午11:35
  */
 public class RootDirectory {
-    private String name; //盘符名称
+    private String name; //root name.e.g.C:\
 
     public String getName() {
         return name;

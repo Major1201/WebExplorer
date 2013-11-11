@@ -14,5 +14,8 @@
         <action name="ShowDiskAction" class="com.major.tools.webexplorer.action.ShowDiskAction">
             <result>showdisk.jsp</result>
         </action>
+        <action name="ShowDirectory" class="com.major.tools.webexplorer.action.ShowDirectoryAction">
+            <result type="redirect">showdirectory.jsp</result>
+        </action>
     </package>
 </struts>
