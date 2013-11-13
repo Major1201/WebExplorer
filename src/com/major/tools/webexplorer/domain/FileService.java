@@ -1,16 +1,15 @@
 package com.major.tools.webexplorer.domain;
 
 import com.major.commons.util.FileUtil;
+import com.major.commons.util.NumberUtil;
+import com.major.commons.util.TimeUtil;
 import com.major.tools.webexplorer.domain.exceptions.*;
 import com.major.tools.webexplorer.entity.FileEntity;
 import com.major.tools.webexplorer.entity.RootDirectory;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: Minjie
@@ -41,25 +40,36 @@ public class FileService {
      * Get file and directory list for the directory.
      * @return a list
      */
-    public static List<FileEntity> getDirectoryStructure(File directory) throws NotADirectoryException, DirectoryNotFoundException {
-        if (directory == null)
+    public static List<FileEntity> getDirectoryStructure(File directory, boolean showHidden, FileEntity.SortBy sortBy, boolean ascend)
+            throws NotADirectoryException, DirectoryNotFoundException {
+        if (directory == null || sortBy == null)
             return null;
         if (!directory.isDirectory())
             throw new NotADirectoryException("File : \"" + directory.getPath() + "\" is not a directory.");
         if (!directory.exists())
             throw new DirectoryNotFoundException("Directory : \"" + directory.getPath() + "\" is not existed.");
 
-        List<FileEntity> list = new ArrayList<>();
+        SortedMap<Object, FileEntity> sortedMap = new TreeMap<>();
         List<File> fileList = FileUtil.listFilesAndDirs(directory);
         if (fileList != null) {
             for (File file : fileList) {
+                if (!showHidden && file.isHidden())
+                    continue;
                 FileEntity fileEntity = new FileEntity();
                 fileEntity.setDirectory(file.isDirectory());
                 fileEntity.setName(file.getName());
                 fileEntity.setPath(file.getPath());
-                list.add(fileEntity);
+                fileEntity.setHidden(file.isHidden());
+                fileEntity.setLastModified(TimeUtil.formatDate(new Date(file.lastModified()), "yyyy-MM-dd HH:mm:ss"));
+                fileEntity.setSize(NumberUtil.formatFileSize(file.length()));
+
+                switch (sortBy) {
+                    case NAME : sortedMap.put(file.getName(), fileEntity); break;
+                    case LAST_MODIFIED : sortedMap.put(file.lastModified(), fileEntity); break;
+                    case SIZE : sortedMap.put(file.length(), fileEntity); break;
+                }
             }
         }
-        return list;
+        return new ArrayList<>(sortedMap.values());
     }
 }

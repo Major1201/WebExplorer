@@ -31,6 +31,7 @@
     <orderEntry type="library" name="json" level="project" />
     <orderEntry type="library" name="jstl" level="project" />
     <orderEntry type="library" name="major" level="project" />
+    <orderEntry type="library" name="bsh" level="project" />
   </component>
 </module>
 

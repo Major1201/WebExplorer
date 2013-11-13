@@ -16,6 +16,7 @@
             <element id="library" level="project" name="json" />
             <element id="library" level="project" name="jstl" />
             <element id="library" level="project" name="major" />
+            <element id="library" level="project" name="bsh" />
           </element>
         </element>
         <element id="javaee-facet-resources" facet="WebExplorer/web/Web" />
@@ -185,6 +186,14 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="libraryTable">
+    <library name="bsh">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/bsh" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/bsh" recursive="false" />
+    </library>
     <library name="commons">
       <CLASSES>
         <root url="file://$PROJECT_DIR$/lib/commons" />

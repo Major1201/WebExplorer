@@ -57,7 +57,7 @@ public class ShowDirectoryAction implements Action {
             return ERROR;
         }
         try {
-            fileEntities = FileService.getDirectoryStructure(new File(currentDirectory));
+            fileEntities = FileService.getDirectoryStructure(new File(currentDirectory), false, FileEntity.SortBy.NAME, true);
         } catch (NotADirectoryException e) {
             return ERROR;
         } catch (DirectoryNotFoundException e) {
