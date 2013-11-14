@@ -6,10 +6,10 @@ import com.major.commons.util.TimeUtil;
 import com.major.tools.webexplorer.domain.exceptions.*;
 import com.major.tools.webexplorer.entity.FileEntity;
 import com.major.tools.webexplorer.entity.RootDirectory;
-import org.apache.commons.collections4.MapUtils;
 
 import java.io.File;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * User: Minjie
@@ -28,7 +28,7 @@ public class FileService {
             List<RootDirectory> rootDirectories = new ArrayList<>(roots.length);
             for (File root : roots) {
                 RootDirectory rootDirectory = new RootDirectory();
-                rootDirectory.setName(root.getPath());
+                rootDirectory.setName(root.getPath().replaceAll(Pattern.quote(File.separator), "/"));
                 rootDirectories.add(rootDirectory);
             }
             return rootDirectories;
@@ -49,7 +49,8 @@ public class FileService {
         if (!directory.exists())
             throw new DirectoryNotFoundException("Directory : \"" + directory.getPath() + "\" is not existed.");
 
-        SortedMap<Object, FileEntity> sortedMap = new TreeMap<>();
+        TreeMap<Object, FileEntity> fileMap = new TreeMap<>();
+        TreeMap<Object, FileEntity> dirMap = new TreeMap<>();
         List<File> fileList = FileUtil.listFilesAndDirs(directory);
         if (fileList != null) {
             for (File file : fileList) {
@@ -57,12 +58,17 @@ public class FileService {
                     continue;
                 FileEntity fileEntity = new FileEntity();
                 fileEntity.setDirectory(file.isDirectory());
-                fileEntity.setName(file.getName());
-                fileEntity.setPath(file.getPath());
+                fileEntity.setName(file.getName().replaceAll(Pattern.quote(File.separator), "/"));
+                fileEntity.setPath(file.getPath().replaceAll(Pattern.quote(File.separator), "/"));
                 fileEntity.setHidden(file.isHidden());
                 fileEntity.setLastModified(TimeUtil.formatDate(new Date(file.lastModified()), "yyyy-MM-dd HH:mm:ss"));
                 fileEntity.setSize(NumberUtil.formatFileSize(file.length()));
 
+                SortedMap<Object, FileEntity> sortedMap;
+                if (file.isDirectory())
+                    sortedMap = dirMap;
+                else
+                    sortedMap = fileMap;
                 switch (sortBy) {
                     case NAME : sortedMap.put(file.getName(), fileEntity); break;
                     case LAST_MODIFIED : sortedMap.put(file.lastModified(), fileEntity); break;
@@ -70,6 +76,14 @@ public class FileService {
                 }
             }
         }
-        return new ArrayList<>(sortedMap.values());
+        List<FileEntity> list = new ArrayList<>();
+        if (ascend) {
+            list.addAll(dirMap.values());
+            list.addAll(fileMap.values());
+        } else {
+            list.addAll(fileMap.descendingMap().values());
+            list.addAll(dirMap.descendingMap().values());
+        }
+        return list;
     }
 }

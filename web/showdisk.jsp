@@ -4,6 +4,12 @@
 <html>
 <head>
     <title>Category</title>
+    <script src="scripts/base64.js"></script>
+    <script type="text/javascript">
+        function showDirectory(str) {
+            window.location.href = "ShowDirectory?currentDirectory=" + base64encode(str);
+        }
+    </script>
 </head>
 <body>
     <table border="1">
@@ -12,7 +18,7 @@
         </tr>
         <c:forEach var="root" items="${rootDirectories}">
             <tr>
-                <td><a href="ShowDirectory?currentDirectory=${root.name}">${root.name}</a></td>
+                <td><a href="#" onclick="showDirectory('${root.name}')">${root.name}</a></td>
             </tr>
         </c:forEach>
     </table>

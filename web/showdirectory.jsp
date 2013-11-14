@@ -3,6 +3,12 @@
 <html>
 <head>
     <title>Category</title>
+    <script src="scripts/base64.js"></script>
+    <script type="text/javascript">
+        function showDirectory(str) {
+            window.location.href = "ShowDirectory?currentDirectory=" + base64encode(utf16to8(str));
+        }
+    </script>
 </head>
 <body>
     <h1>Index of&nbsp;${currentDirectory}</h1>
@@ -16,7 +22,7 @@
         <tr>
             <td>
                 <c:if test="${parentDirectory == ''}"><img src="images/icons/back.gif"/>&nbsp;<a href="ShowDiskAction">...</a></c:if>
-                <c:if test="${parentDirectory != ''}"><img src="images/icons/back.gif"/>&nbsp;<a href="ShowDirectory?currentDirectory=${parentDirectory}">...</a></c:if>
+                <c:if test="${parentDirectory != ''}"><img src="images/icons/back.gif"/>&nbsp;<a href="#" onclick="showDirectory('${parentDirectory}');">...</a></c:if>
             </td>
             <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
         </tr>
@@ -25,7 +31,7 @@
                 <td>
                     <c:if test="${file.directory == true}">
                         <img src="images/icons/folder.gif"/>
-                        <a href="ShowDirectory?currentDirectory=${currentDirectory}${file.name}">${file.name}</a>
+                        <a href="#" onclick="showDirectory('${currentDirectory}${file.name}')">${file.name}</a>
                     </c:if>
                     <c:if test="${file.directory == false}">
                         <img src="images/icons/generic.gif"/>&nbsp;${file.name}

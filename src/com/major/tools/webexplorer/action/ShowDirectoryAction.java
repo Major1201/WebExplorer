@@ -1,5 +1,6 @@
 package com.major.tools.webexplorer.action;
 
+import com.major.commons.util.EncryptUtil;
 import com.major.tools.webexplorer.domain.FileService;
 import com.major.tools.webexplorer.domain.exceptions.DirectoryNotFoundException;
 import com.major.tools.webexplorer.domain.exceptions.NotADirectoryException;
@@ -9,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * User: Minjie
@@ -47,12 +49,18 @@ public class ShowDirectoryAction implements Action {
     @Override
     public String execute() {
         if (StringUtils.isNotEmpty(currentDirectory)) {
-            currentDirectory = currentDirectory.endsWith(File.separator) ? currentDirectory : currentDirectory + File.separator;
+            //decode
+            System.out.println(currentDirectory);
+            currentDirectory = EncryptUtil.decodeBase64(currentDirectory);
+            System.out.println(currentDirectory);
+            currentDirectory = currentDirectory.endsWith("/") ? currentDirectory : currentDirectory + "/";
             parentDirectory = new File(currentDirectory).getParent();
             if (parentDirectory == null)
                 parentDirectory = "";
-            else
-                parentDirectory = parentDirectory.endsWith(File.separator) ? parentDirectory : parentDirectory + File.separator;
+            else {
+                parentDirectory = parentDirectory.replaceAll(Pattern.quote(File.separator), "/");
+                parentDirectory = parentDirectory.endsWith("/") ? parentDirectory : parentDirectory + "/";
+            }
         } else {
             return ERROR;
         }

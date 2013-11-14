@@ -1,8 +1,3 @@
-<%--
-  User: Minjie
-  Date: 13-11-8
-  Time: 下午8:41
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
