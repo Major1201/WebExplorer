@@ -24,5 +24,8 @@
         <action name="ShowDirectory" class="com.major.tools.webexplorer.action.ShowDirectoryAction">
             <result>showdirectory.jsp</result>
         </action>
+        <action name="ShowPictures" class="com.major.tools.webexplorer.action.ShowPicturesAction">
+            <result>showpictures.jsp</result>
+        </action>
     </package>
 </struts>

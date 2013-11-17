@@ -23,12 +23,16 @@
         function downloadFile(str) {
             window.location.href = "Download?file=" + encodeURIComponent(base64encode(utf16to8(str)));
         }
+        function showPictures(str) {
+            window.location.href = "ShowPictures?currentDirectory=" + encodeURIComponent(base64encode(utf16to8(str)));
+        }
     </script>
 </head>
 <body>
     <h1>Index of&nbsp;${currentDirectory}</h1>
     <label><input type="checkbox" id="showHidden" name="showHidden" onclick="showCurrentDirectory();"/>Show Hidden</label><br/>
-    <a href="#" onclick="alert('Sorry!')">Show Pictures</a>
+    <a href="#" onclick="showPictures('${currentDirectory}');">Show Pictures</a>
+    <a href="#" onclick="alert('Sorry')">Upload</a>
     <br/><br/>
     <table border="1">
         <tr>

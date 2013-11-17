@@ -2,11 +2,13 @@ package com.major.tools.webexplorer.action;
 
 import com.major.commons.util.EncryptUtil;
 import com.opensymphony.xwork2.Action;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URLDecoder;
 
 /**
  * User: Minjie
@@ -19,7 +21,8 @@ public class DownloadAction implements Action {
 
     public InputStream getInputStream() throws Exception {
         if (StringUtils.isNotEmpty(file)) {
-            file = EncryptUtil.decodeBase64(file);
+            file = URLDecoder.decode(file, "UTF-8");
+            file = new String(Base64.decodeBase64(file));
             fileName = new File(file).getName();
             return new FileInputStream(file);
         }
