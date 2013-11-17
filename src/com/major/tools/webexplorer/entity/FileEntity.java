@@ -13,10 +13,6 @@ public class FileEntity {
     private String lastModified;
     private String size;
 
-    public static enum SortBy {
-        NAME, LAST_MODIFIED, SIZE
-    }
-
     public String getPath() {
         return path;
     }

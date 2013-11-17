@@ -1,5 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="include/jsp/commons.jsp"%>
 
 <html>
 <head>
@@ -7,7 +6,7 @@
     <script src="scripts/base64.js"></script>
     <script type="text/javascript">
         function showDirectory(str) {
-            window.location.href = "ShowDirectory?currentDirectory=" + base64encode(str);
+            window.location.href = "ShowDirectory?currentDirectory=" + encodeURIComponent(base64encode(utf16to8(str)));
         }
     </script>
 </head>

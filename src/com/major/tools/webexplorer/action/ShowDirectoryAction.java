@@ -21,6 +21,9 @@ public class ShowDirectoryAction implements Action {
     private String parentDirectory;
     private String currentDirectory;
     private List<FileEntity> fileEntities;
+    private int sortBy = 1;
+    private boolean ascend = true;
+    private boolean showHidden = false;
 
     public String getParentDirectory() {
         return parentDirectory;
@@ -46,13 +49,35 @@ public class ShowDirectoryAction implements Action {
         this.fileEntities = fileEntities;
     }
 
+    public int getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(int sortBy) {
+        this.sortBy = sortBy;
+    }
+
+    public boolean isAscend() {
+        return ascend;
+    }
+
+    public void setAscend(boolean ascend) {
+        this.ascend = ascend;
+    }
+
+    public boolean isShowHidden() {
+        return showHidden;
+    }
+
+    public void setShowHidden(boolean showHidden) {
+        this.showHidden = showHidden;
+    }
+
     @Override
     public String execute() {
         if (StringUtils.isNotEmpty(currentDirectory)) {
             //decode
-            System.out.println(currentDirectory);
             currentDirectory = EncryptUtil.decodeBase64(currentDirectory);
-            System.out.println(currentDirectory);
             currentDirectory = currentDirectory.endsWith("/") ? currentDirectory : currentDirectory + "/";
             parentDirectory = new File(currentDirectory).getParent();
             if (parentDirectory == null)
@@ -65,7 +90,7 @@ public class ShowDirectoryAction implements Action {
             return ERROR;
         }
         try {
-            fileEntities = FileService.getDirectoryStructure(new File(currentDirectory), false, FileEntity.SortBy.NAME, true);
+            fileEntities = FileService.getDirectoryStructure(new File(currentDirectory), showHidden, sortBy, ascend);
         } catch (NotADirectoryException e) {
             return ERROR;
         } catch (DirectoryNotFoundException e) {
