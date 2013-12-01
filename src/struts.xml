@@ -7,6 +7,21 @@
 <struts>
     <constant name="struts.i18n.encoding" value="UTF-8"/>
     <package name="default" extends="struts-default">
+        <interceptors>
+            <interceptor name="default" class="com.major.tools.webexplorer.action.GlobalInterceptor"/>
+            <interceptor-stack name="securityStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="default"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="securityStack"/>
+
+        <global-results>
+            <result name="login" type="redirect">index.jsp</result>
+            <result name="error" type="redirect">error/error.jsp</result>
+        </global-results>
+        
         <action name="Download" class="com.major.tools.webexplorer.action.DownloadAction">
             <result type="stream">
                 <param name="inputName">inputStream</param>
@@ -16,7 +31,6 @@
         </action>
         <action name="ValidateSignature" class="com.major.tools.webexplorer.action.ValidateSignature">
             <result type="redirect">ShowDiskAction</result>
-            <result name="fail" type="redirect">index.jsp</result>
         </action>
         <action name="ShowDiskAction" class="com.major.tools.webexplorer.action.ShowDiskAction">
             <result>showdisk.jsp</result>

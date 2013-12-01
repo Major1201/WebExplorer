@@ -29,7 +29,7 @@
     </script>
 </head>
 <body>
-    <h1>Index of&nbsp;${currentDirectory}</h1>
+    <h1>Index of&nbsp;<s:property value="currentDirectory"/></h1>
     <label><input type="checkbox" id="showHidden" name="showHidden" onclick="showCurrentDirectory();"/>Show Hidden</label><br/>
     <a href="#" onclick="showPictures('${currentDirectory}');">Show Pictures</a>
     <a href="#" onclick="alert('Sorry')">Upload</a>

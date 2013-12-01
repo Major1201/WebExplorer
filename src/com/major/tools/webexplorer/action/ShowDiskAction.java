@@ -2,7 +2,7 @@ package com.major.tools.webexplorer.action;
 
 import com.major.tools.webexplorer.domain.FileService;
 import com.major.tools.webexplorer.entity.RootDirectory;
-import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionSupport;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * Date: 13-11-9
  * Time: 上午12:50
  */
-public class ShowDiskAction implements Action {
+public class ShowDiskAction extends ActionSupport {
     private List<RootDirectory> rootDirectories; //Root list
 
     public List<RootDirectory> getRootDirectories() {

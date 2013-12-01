@@ -1,7 +1,6 @@
 package com.major.tools.webexplorer.action;
 
-import com.major.commons.util.EncryptUtil;
-import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,7 +14,7 @@ import java.net.URLDecoder;
  * Date: 13-11-17
  * Time: 下午8:41
  */
-public class DownloadAction implements Action {
+public class DownloadAction extends ActionSupport {
     private String file;
     private String fileName;
 

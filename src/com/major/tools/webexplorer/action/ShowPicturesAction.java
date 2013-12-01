@@ -1,7 +1,7 @@
 package com.major.tools.webexplorer.action;
 
 import com.major.commons.util.EncryptUtil;
-import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
@@ -18,7 +18,7 @@ import java.util.List;
  * Date: 13-11-17
  * Time: 下午10:17
  */
-public class ShowPicturesAction implements Action {
+public class ShowPicturesAction extends ActionSupport {
     private String currentDirectory;
     private List<String> links;
 

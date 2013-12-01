@@ -5,7 +5,7 @@ import com.major.tools.webexplorer.domain.FileService;
 import com.major.tools.webexplorer.domain.exceptions.DirectoryNotFoundException;
 import com.major.tools.webexplorer.domain.exceptions.NotADirectoryException;
 import com.major.tools.webexplorer.entity.FileEntity;
-import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * Date: 13-11-11
  * Time: 下午12:13
  */
-public class ShowDirectoryAction implements Action {
+public class ShowDirectoryAction extends ActionSupport {
     private String parentDirectory;
     private String currentDirectory;
     private List<FileEntity> fileEntities;
